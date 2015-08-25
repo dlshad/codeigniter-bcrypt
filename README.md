@@ -39,3 +39,36 @@ To check a hash password, simply pass the string and stored password to ``check_
     }
     
 The function will return ``TRUE`` or ``FALSE`` dependant on success.
+
+//For the model
+
+function getUserByLogin($login, $password) {        
+    $this->db->where('login',$login);
+
+    $result = $this->getUsers($password);
+
+    if (!empty($result)) {
+        return $result;
+    } else {
+        return null;
+    }
+}
+function getUsers($password) {
+    $query = $this->db->get('users');
+
+    if ($query->num_rows() > 0) {
+
+        $result = $query->row_array();
+
+        if ($this->bcrypt->check_password($password, $result['password'])) {
+            //We're good
+            return $result;
+        } else {
+            //Wrong password
+            return array();
+        }
+
+    } else {
+        return array();
+    }
+}
