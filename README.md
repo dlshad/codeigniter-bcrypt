@@ -44,7 +44,6 @@ The function will return ``TRUE`` or ``FALSE`` dependant on success.
 
 function getUserByLogin($login, $password) {        
     $this->db->where('login',$login);
-
     $result = $this->getUsers($password);
 
     if (!empty($result)) {
@@ -53,6 +52,7 @@ function getUserByLogin($login, $password) {
         return null;
     }
 }
+
 function getUsers($password) {
     $query = $this->db->get('users');
 
